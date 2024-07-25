@@ -1,4 +1,6 @@
 import React from "react"
+import GlobalStyle from "./styles/global"
+
 import { createRoot } from "react-dom/client"
 import App from "./App/App"
 
@@ -12,6 +14,7 @@ if (container) {
   root.render(
     <React.StrictMode>
       <App />
+      <GlobalStyle />
     </React.StrictMode>,
   )
 } else {
