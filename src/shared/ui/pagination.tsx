@@ -10,6 +10,7 @@ interface PaginationProps {
 
 const Button = styled.button<{ isActive: boolean }>`
   margin: 0 3px;
+  min-width: 24px;
   padding: 3px 4px;
   border: 1px solid gray;
   border-radius: 5px;
@@ -37,7 +38,7 @@ const Pagination: React.FC<PaginationProps> = ({
   currentPage,
 }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage)
-  const maxButtons = 5
+  const maxButtons = 10
 
   const calculatePageButtons = () => {
     let pageNumbers: number[] = []
