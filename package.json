@@ -1,5 +1,5 @@
 {
-  "name": "vite-template-redux",
+  "name": "toolkit",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -15,7 +15,6 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^2.0.1",
     "axios": "^1.7.2",
     "effector": "^23.2.2",
     "effector-react": "^23.2.1",
