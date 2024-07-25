@@ -1,7 +1,7 @@
 import type React from "react"
 import styled, { css } from "styled-components"
 
-interface PaginationProps {
+interface IPaginationProps {
   totalItems: number
   itemsPerPage: number
   onPageChange: (page: number) => void
@@ -31,7 +31,7 @@ const Button = styled.button<{ isActive: boolean }>`
   }
 `
 
-const Pagination: React.FC<PaginationProps> = ({
+const Pagination: React.FC<IPaginationProps> = ({
   totalItems,
   itemsPerPage,
   onPageChange,
