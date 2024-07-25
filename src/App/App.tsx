@@ -1,5 +1,8 @@
 import styled from "styled-components"
 
+import Pagination from "../shared/ui/pagination"
+import { useState } from "react"
+
 const Container = styled.div`
   width: 100vw;
   min-height: 100vh;
@@ -8,7 +11,17 @@ const Container = styled.div`
 `
 
 const App = () => {
-  return <Container></Container>
+  const [page, setPage] = useState(1)
+  return (
+    <Container>
+      <Pagination
+        totalItems={300}
+        itemsPerPage={10}
+        onPageChange={setPage}
+        currentPage={page}
+      />
+    </Container>
+  )
 }
 
 export default App
