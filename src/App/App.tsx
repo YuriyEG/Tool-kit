@@ -1,6 +1,7 @@
 import styled from "styled-components"
 
 import Pagination from "../shared/ui/pagination"
+import RepositoryCard from "../features/Card"
 import { useState } from "react"
 
 const Container = styled.div`
@@ -20,6 +21,7 @@ const App = () => {
         onPageChange={setPage}
         currentPage={page}
       />
+      <RepositoryCard />
     </Container>
   )
 }

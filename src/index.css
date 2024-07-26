@@ -19,3 +19,8 @@ code {
   -ms-user-select: none;
   user-select: none;
 }
+
+@font-face {
+  font-family: "Regular";
+  src: url("../assets/fonts/Nunito-Regular.ttf") format("truetype");
+}
