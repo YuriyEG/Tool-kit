@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 import Pagination from "../shared/ui/pagination"
-import RepositoryCard from "../features/Card"
+import RepositoryCard from "../features/RepositoryCard"
 import { useState } from "react"
 
 const Container = styled.div`
