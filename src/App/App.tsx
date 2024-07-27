@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import styled from "styled-components"
 
 import Pagination from "../shared/ui/Pagination"
 import SearchInput from "../shared/ui/SearchInput"
 import RepositoryList from "../widgets/RepositoryList"
+
+import fetchRepositories from "../services/fetchRepositories"
 
 const Container = styled.div`
   width: 100vw;
@@ -16,12 +18,25 @@ const Container = styled.div`
 
 const App = () => {
   const [page, setPage] = useState(1)
+  const [query, setQuery] = useState("")
+  const [repositories, setRepositories] = useState([])
+
+  const searchHandler = query => {
+    setQuery(query)
+  }
+
+  useEffect(() => {
+    fetchRepositories(query).then(res => setRepositories(res))
+  }, [query])
+
+  const currentChunk = repositories.slice((page - 1) * 10, page * 10)
+
   return (
     <Container>
-      <SearchInput searchHandler={v => console.log(v)} />
-      <RepositoryList />
+      <SearchInput searchHandler={searchHandler} query={query} />
+      <RepositoryList list={currentChunk} />
       <Pagination
-        totalItems={300}
+        totalItems={repositories.length}
         itemsPerPage={10}
         onPageChange={setPage}
         currentPage={page}
