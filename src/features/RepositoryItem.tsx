@@ -8,53 +8,70 @@ const RepositoryContainer = styled.div`
   align-items: center;
   width: 450px;
   padding: 10px 20px 10px 20px;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(221, 221, 221, 1);
   border-radius: 5px;
   margin: 0 auto;
   margin-bottom: 2px;
-  background-color: #f9f9f9;
+  background-color: rgba(249, 249, 249, 1);
 
   &:hover {
-    background-color: #f1f1f1;
+    background-color: rgba(241, 241, 241, 1);
+    cursor: pointer;
   }
 `
 
 const RepositoryName = styled.a`
   font-size: 1.2em;
-  color: #333;
+  color: rgba(0, 0, 0, 1);
   text-decoration: none;
-
+  font-size: 20px;
+  max-width: 60%;
+  text-align: left;
+  overflow: hidden;
   &:hover {
-    text-decoration: underline;
+    color: rgba(128, 128, 128, 1);
   }
+`
+
+const Right = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 30%;
 `
 
 const Stars = styled.span`
-  color: #f39c12;
-  margin-right: 10px;
+  color: rgba(255, 165, 0, 1);
+  align-self: flex-end;
 `
 
 const Distance = styled.span`
-  color: #666;
-  border: 1px solid black;
+  color: rgba(128, 128, 128, 1);
+  font-size: 12px;
+  align-self: flex-end;
 `
 
-const Link = styled.a`
-  text-decoration: none;
-  &:hover {
-    color: gray;
-  }
-`
+const RepositoryItem = ({ item }) => {
+  const {
+    name,
+    url,
+    stargazerCount,
+    defaultBranchRef: {
+      target: { committedDate },
+    },
+  } = item
+  const distance = getDistance(committedDate)
 
-const RepositoryItem = () => {
   return (
     <RepositoryContainer>
-      <RepositoryName href="#" target="_blank" rel="noopener noreferrer">
-        Name
+      <RepositoryName href={url} target="_blank" rel="noopener noreferrer">
+        {name}
       </RepositoryName>
-      <Stars>⭐ {2435}</Stars>
-      <Distance>Distance</Distance>
-      <Link>Link</Link>
+      <Right>
+        <Stars>⭐ {stargazerCount}</Stars>
+        <Distance>{distance}</Distance>
+      </Right>
     </RepositoryContainer>
   )
 }
