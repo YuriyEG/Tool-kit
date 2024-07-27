@@ -17,14 +17,13 @@ const StyledInput = styled.input`
   }
 `
 
-const SearchInput = ({ searchHandler }) => {
-  const [query, setQuery] = useState("")
+const SearchInput = ({ searchHandler, query }) => {
   return (
     <StyledInput
       type="text"
       placeholder="Поиск репозиториев на GitHub"
       value={query}
-      onChange={e => setQuery(e.target.value)}
+      onChange={e => searchHandler(e.target.value)}
     />
   )
 }
