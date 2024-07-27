@@ -1,10 +1,10 @@
 import RepositoryItem from "../features/RepositoryItem"
 
-const RepositoryList = ({ list = [1, 2, 3, 4, 5] }) => {
+const RepositoryList = ({ list = [] }) => {
   return (
     <ul>
       {list.map(item => (
-        <RepositoryItem />
+        <RepositoryItem item={item} />
       ))}
     </ul>
   )
