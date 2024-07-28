@@ -23,7 +23,8 @@ const TooltipText = styled.a`
   left: 50%;
   margin-left: -60px;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: 0.2s ease-in all;
+  transition-delay: 1s;
 
   ${TooltipWrapper}:hover & {
     visibility: visible;

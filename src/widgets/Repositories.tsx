@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useTransition } from "react"
 import styled from "styled-components"
 import SearchInput from "../shared/ui/SearchInput"
 import RepositoryList from "../features/RepositoryList"
@@ -9,6 +9,9 @@ import {
   fetchListFx,
 } from "../models/RepositoriesEffector"
 import { useUnit } from "effector-react"
+import debouncer from "../helper/debouncer"
+
+const debouncedFx = debouncer(fetchListFx, 550)
 
 const Container = styled.div`
   margin: 0 auto;
@@ -28,7 +31,7 @@ const Repositories = () => {
     if (!searchQuery) {
       return
     }
-    fetchListFx(searchQuery)
+    debouncedFx(searchQuery)
   }
 
   return (
