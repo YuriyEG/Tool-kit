@@ -8,7 +8,7 @@ interface IPaginationProps {
   currentPage: number
 }
 
-const Button = styled.button<{ isActive: boolean }>`
+const Button = styled.button<{ selected: boolean }>`
   margin: 0 3px;
   min-width: 24px;
   padding: 3px 4px;
@@ -19,7 +19,7 @@ const Button = styled.button<{ isActive: boolean }>`
   color: gray;
 
   ${props =>
-    props.isActive &&
+    props.selected &&
     css`
       background-color: gray;
       color: white;
@@ -69,7 +69,7 @@ const Pagination: React.FC<IPaginationProps> = ({
         key={number}
         onClick={() => onPageChange(number)}
         disabled={number === currentPage}
-        isActive={number === currentPage}
+        selected={number === currentPage}
       >
         {number}
       </Button>
@@ -94,7 +94,7 @@ const Pagination: React.FC<IPaginationProps> = ({
           key="first"
           onClick={handlePreviousGroup}
           disabled={currentPage === 1}
-          isActive={false}
+          selected={false}
         >
           &lt;
         </Button>
@@ -105,7 +105,7 @@ const Pagination: React.FC<IPaginationProps> = ({
           key="last"
           onClick={handleNextGroup}
           disabled={false}
-          isActive={false}
+          selected={false}
         >
           &gt;
         </Button>

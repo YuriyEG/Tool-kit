@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 
 import styled from "styled-components"
 
 import Pagination from "../shared/ui/Pagination"
 import SearchInput from "../shared/ui/SearchInput"
-import RepositoryList from "../widgets/RepositoryList"
+import RepositoryList from "../features/RepositoryList"
+import Repositories from "../widgets/Repositories"
 
 import fetchRepositories from "../services/fetchRepositories"
+import RepositoryCard from "../features/RepositoryCard"
+import fetchUserRepositories from "../services/fetchUserRepositories"
 
 const Container = styled.div`
   width: 100vw;
@@ -20,6 +23,12 @@ const App = () => {
   const [page, setPage] = useState(1)
   const [query, setQuery] = useState("")
   const [repositories, setRepositories] = useState([])
+  const [repoId, setRepo] = useState(null)
+  const [myRepos, setMyRepos] = useState([])
+
+  // useEffect(() => {
+  //   fetchUserRepositories().then(res => setMyRepos(res))
+  // }, [])
 
   const searchHandler = query => {
     setQuery(query)
@@ -29,18 +38,17 @@ const App = () => {
     fetchRepositories(query).then(res => setRepositories(res))
   }, [query])
 
-  const currentChunk = repositories.slice((page - 1) * 10, page * 10)
+  useEffect(() => {
+    console.log(repoId)
+  }, [repoId])
+
+  const currentChunk = query.length
+    ? repositories.slice((page - 1) * 10, page * 10)
+    : myRepos.slice((page - 1) * 10, page * 10)
 
   return (
     <Container>
-      <SearchInput searchHandler={searchHandler} query={query} />
-      <RepositoryList list={currentChunk} />
-      <Pagination
-        totalItems={repositories.length}
-        itemsPerPage={10}
-        onPageChange={setPage}
-        currentPage={page}
-      />
+      <Repositories />
     </Container>
   )
 }

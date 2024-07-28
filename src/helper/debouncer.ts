@@ -1,4 +1,4 @@
-function debounce<T extends (...args: any[]) => any>(func: T, delay: number) {
+function debouncer<T extends (...args: any[]) => any>(func: T, delay: number) {
   let timeoutId: NodeJS.Timeout | undefined
 
   return function (...args: Parameters<T>) {
@@ -8,3 +8,5 @@ function debounce<T extends (...args: any[]) => any>(func: T, delay: number) {
     }, delay)
   }
 }
+
+export default debouncer
