@@ -1,5 +1,4 @@
 import styled from "styled-components"
-
 import Tooltip from "../shared/ui/Tooltip"
 import getDistance from "../helper/getDistance"
 
@@ -9,7 +8,7 @@ const RepositoryContainer = styled.li`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 10px 20px 10px 20px;
+  padding: 10px 20px;
   border: 1px solid rgba(221, 221, 221, 1);
   border-radius: 5px;
   margin: 0 auto;
@@ -31,6 +30,7 @@ const RepositoryName = styled.a`
   overflow: hidden;
   word-break: break-all;
   text-decoration: none;
+
   &:hover {
     color: rgba(128, 128, 128, 1);
   }
@@ -64,7 +64,6 @@ const RepositoryItem = ({ item, select }) => {
       <Tooltip content={url}>
         <RepositoryName>{name}</RepositoryName>
       </Tooltip>
-
       <Right>
         <Stars>⭐ {stargazerCount}</Stars>
         <Distance>{distance}</Distance>

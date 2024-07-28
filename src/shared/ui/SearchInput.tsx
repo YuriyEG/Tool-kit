@@ -1,14 +1,13 @@
-import { useState } from "react"
 import styled from "styled-components"
 
 const StyledInput = styled.input`
-  padding: 8px;
+  padding: 10px;
   width: 100%;
-  height: 46px;
-  border: 2px solid #ccc;
+  height: 50px;
+  border: 2px solid rgba(204, 204, 204, 1);
   border-radius: 8px;
   font-size: 18px;
-  text-indent: 8px;
+  text-indent: 10px;
   color: rgba(0, 0, 0, 0.9);
   margin-bottom: 20px;
 

@@ -1,4 +1,3 @@
-import React from "react"
 import styled from "styled-components"
 
 const TooltipWrapper = styled.span`
@@ -6,7 +5,7 @@ const TooltipWrapper = styled.span`
   position: relative;
   display: inline-block;
   cursor: pointer;
-  opacity: 80%;
+  opacity: 0.8;
 `
 
 const TooltipText = styled.a`
@@ -14,22 +13,17 @@ const TooltipText = styled.a`
   min-width: 100px;
   min-height: 20px;
   background-color: rgba(40, 40, 40, 1);
-  color: #fff;
+  color: rgba(255, 255, 255, 1);
   text-align: center;
   border-radius: 4px;
-  padding: 6px 12px;
-  text-decoration: none;
-
-  /* Позиционирование тултипа */
+  padding: 8px 12px;
   position: absolute;
   z-index: 1;
-  bottom: 125%; /* Положение выше ссылки */
+  bottom: 125%;
   left: 50%;
   margin-left: -60px;
-
   opacity: 0;
   transition: opacity 0.3s;
-  transition: 0.1s ease-in all;
 
   ${TooltipWrapper}:hover & {
     visibility: visible;

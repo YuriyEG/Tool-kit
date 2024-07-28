@@ -9,25 +9,25 @@ interface IPaginationProps {
 }
 
 const Button = styled.button<{ selected: boolean }>`
-  margin: 0 3px;
-  min-width: 24px;
-  padding: 3px 4px;
-  border: 1px solid gray;
+  margin: 0 5px;
+  min-width: 25px;
+  padding: 5px 8px;
+  border: 1px solid rgba(128, 128, 128, 1);
   border-radius: 5px;
   cursor: pointer;
   background-color: transparent;
-  color: gray;
+  color: rgba(128, 128, 128, 1);
 
   ${props =>
     props.selected &&
     css`
-      background-color: gray;
-      color: white;
+      background-color: rgba(128, 128, 128, 1);
+      color: rgba(255, 255, 255, 1);
       cursor: default;
     `}
 
   &:hover {
-    opacity: 70%;
+    opacity: 0.7;
   }
 `
 
@@ -88,7 +88,6 @@ const Pagination: React.FC<IPaginationProps> = ({
 
   return (
     <div>
-      {" "}
       {currentPage !== 1 && (
         <Button
           key="first"
