@@ -55,12 +55,12 @@ const Distance = styled.span`
   align-self: flex-end;
 `
 
-const RepositoryItem = ({ item, select }) => {
+const RepositoryItem = ({ item, select, changeId }) => {
   const { id, name, url, stargazerCount, defaultBranchRef } = item
   const distance = getDistance(defaultBranchRef?.target?.committedDate)
 
   return (
-    <RepositoryContainer onClick={() => select(id)}>
+    <RepositoryContainer onClick={() => changeId(id)}>
       <Tooltip content={url}>
         <RepositoryName>{name}</RepositoryName>
       </Tooltip>

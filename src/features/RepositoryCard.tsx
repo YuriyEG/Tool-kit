@@ -1,9 +1,15 @@
+import type { Repository } from "../services/fetchRepositories"
+
 import { useEffect, useState, type FC } from "react"
 import styled from "styled-components"
 
 import Tooltip from "../shared/ui/Tooltip"
 import getDistance from "../helper/getDistance"
 import fetchRepositoryData from "../services/fetchRepositoryData"
+
+import { useUnit } from "effector-react"
+
+import { $repositoryCard } from "../models/RepositoryCardEffector"
 
 const Container = styled.article`
   width: 500px;
@@ -75,54 +81,51 @@ const About = styled.div`
   }
 `
 
-interface IRepository {
-  name: string
-  updated_at: Date
-  stargazers_count: number
-  owner: { avatar_url: string; html_url: string; login: string }
-  full_name: string
-  language: string
-  description: string
-}
-
-const RepositoryCard: FC<{ id: string }> = ({ id }) => {
-  const [card, setCard] = useState<IRepository | undefined>(undefined)
+const RepositoryCard: FC = () => {
+  const { id } = useUnit($repositoryCard)
+  const [card, setCard] = useState(null)
 
   useEffect(() => {
     fetchRepositoryData(id).then(res => setCard(res))
-  }, [id])
+  })
 
   if (card) {
+    const avatar = card?.owner?.avatarUrl
+    const name = card?.name
+    const pushedAt = card?.pushedAt
+    const stargazerCount = card?.stargazerCount
+    const login = card?.owner?.login
+    const languages = card?.languages?.nodes
+    const description = card?.description
+
     return (
       <Container>
         <CardHeader>
           <span className="title">
-            <Tooltip content={<p>Title</p>}>{card.name}</Tooltip>
+            <Tooltip content={<p>Title</p>}>{name}</Tooltip>
           </span>
-          <span className="stars">⭐{card.stargazers_count}</span>
-          <span className="distance">{getDistance(card.updated_at)}</span>
+          <span className="stars">⭐{stargazerCount}</span>
+          <span className="distance">{getDistance(pushedAt)}</span>
         </CardHeader>
         <CardBody>
           <span className="span">
-            <img
-              src={card.owner.avatar_url}
-              className="photo"
-              alt={card.full_name}
-            />
+            <img src={avatar} className="photo" alt={name} />
           </span>
-          <a href={card.owner.html_url} className="link">
-            {card.full_name}
+          <a href={login} className="link">
+            {login}
           </a>
         </CardBody>
         <About>
-          <span className="language">Language: {card.language}</span>
-          <span className="description">About: {card.description}</span>
+          <span className="language">
+            Language: {languages => map(node => <p>{node.name} </p>)}
+          </span>
+          <span className="description">About: {description}</span>
         </About>
       </Container>
     )
+  } else {
+    return <h2>Загрузка</h2>
   }
-
-  return null
 }
 
 export default RepositoryCard

@@ -21,6 +21,7 @@
     "effector": "^23.2.2",
     "effector-react": "^23.2.1",
     "effector-storage": "^7.1.0",
+    "lodash.debounce": "^4.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled": "^1.0.0",

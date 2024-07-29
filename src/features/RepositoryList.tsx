@@ -1,10 +1,15 @@
 import RepositoryItem from "./RepositoryItem"
 
-const RepositoryList = ({ list = [], select }) => {
+const RepositoryList = ({ list = [], select, changeId }) => {
   return (
     <ul>
       {list.map(item => (
-        <RepositoryItem item={item} key={item.id} select={select} />
+        <RepositoryItem
+          item={item}
+          key={item.id}
+          select={() => select(item.id)}
+          changeId={changeId}
+        />
       ))}
     </ul>
   )
