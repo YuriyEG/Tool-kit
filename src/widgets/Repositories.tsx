@@ -12,6 +12,8 @@ import { useUnit } from "effector-react"
 import debouncer from "../helper/debouncer"
 
 import { $repositoryCard } from "../models/RepositoryCardEffector"
+import { $currentPage } from "../models/RepositoriesPagination"
+import { changeCurrentPage } from "../models/RepositoriesPagination"
 import { setCardId, openCard } from "../models/RepositoryCardEffector"
 
 const debouncedFx = debouncer(fetchListFx, 550)
@@ -23,11 +25,10 @@ const Container = styled.div`
 `
 
 const Repositories = ({ changeId }) => {
-  const [page, setPage] = useState(1)
   const [query, setQuery] = useState("")
-  const [id, setId] = useState(null)
 
   const results = useUnit($repositories)
+  const currentPage = useUnit($currentPage)
   const loading = useUnit($loading)
 
   const searchHandler = searchQuery => {
@@ -44,15 +45,16 @@ const Repositories = ({ changeId }) => {
     openCard()
   }
 
+  const currentChunk = results.slice((currentPage - 1) * 10, currentPage * 10)
   return (
     <Container>
       <SearchInput searchHandler={searchHandler} query={query} />
-      <RepositoryList list={results} changeId={openCardHandler} />
+      <RepositoryList list={currentChunk} changeId={openCardHandler} />
       <Pagination
         totalItems={results.length}
         itemsPerPage={10}
-        onPageChange={setPage}
-        currentPage={page}
+        onPageChange={changeCurrentPage}
+        currentPage={currentPage}
       />
     </Container>
   )

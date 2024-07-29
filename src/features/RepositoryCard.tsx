@@ -55,6 +55,7 @@ const CardBody = styled.div`
 
   .photo {
     width: 250px;
+    height: 250px;
     border-radius: 50%;
   }
 
@@ -87,7 +88,7 @@ const RepositoryCard: FC = () => {
 
   useEffect(() => {
     fetchRepositoryData(id).then(res => setCard(res))
-  })
+  }, [])
 
   if (card) {
     const avatar = card?.owner?.avatarUrl
@@ -117,7 +118,10 @@ const RepositoryCard: FC = () => {
         </CardBody>
         <About>
           <span className="language">
-            Language: {languages => map(node => <p>{node.name} </p>)}
+            Language:{" "}
+            {languages.map(node => (
+              <span>{String(node.name)} </span>
+            ))}
           </span>
           <span className="description">About: {description}</span>
         </About>

@@ -36,16 +36,15 @@ const PortalModal: FC<Props> = (props: Props) => {
   const { children } = props
   const element = document.getElementById("modal-root")!
 
-  useEffect(() => {
-    const html = document.getElementsByTagName("html")
-    html[0].style.overflow = "hidden"
-    return () => {
-      const html = document.getElementsByTagName("html")
-      html[0].style.overflow = "scroll"
-    }
-  }, [])
-
   const Overlay = ({ children }) => {
+    useEffect(() => {
+      const html = document.getElementsByTagName("html")
+      html[0].style.overflow = "hidden"
+      return () => {
+        const html = document.getElementsByTagName("html")
+        html[0].style.overflow = "scroll"
+      }
+    }, [])
     return (
       <OverlayContainer>
         <CloseButton onClick={props.onClose}>&times;</CloseButton>
@@ -54,7 +53,9 @@ const PortalModal: FC<Props> = (props: Props) => {
     )
   }
 
-  return createPortal(<Overlay>{children}</Overlay>, element)
+  if (props.open) {
+    return createPortal(<Overlay>{children}</Overlay>, element)
+  }
 }
 
 export default PortalModal

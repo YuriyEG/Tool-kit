@@ -20,16 +20,11 @@ const Container = styled.div`
 `
 const App = () => {
   const { isOpen } = useUnit($repositoryCard)
-
   return (
     <Container>
-      <button onClick={() => setIsOpen(true)}>Open</button>
-
-      {isOpen && (
-        <PortalModal onClose={closeCard}>
-          <RepositoryCard />
-        </PortalModal>
-      )}
+      <PortalModal onClose={closeCard} open={isOpen}>
+        <RepositoryCard />
+      </PortalModal>
 
       <Repositories changeId={id => setId(id)} />
     </Container>
