@@ -41,6 +41,7 @@ const Repositories = ({ changeId }) => {
 
   const searchHandler = searchQuery => {
     changeQuery(searchQuery)
+    changeCurrentPage(1)
 
     if (searchQuery.trim()) {
       debouncedFx(searchQuery)
