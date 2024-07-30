@@ -1,20 +1,20 @@
 import type { Repository } from "../services/fetchRepositories"
 
 import { useEffect, useLayoutEffect, useState, type FC } from "react"
+import { useParams } from "react-router-dom"
+
 import styled from "styled-components"
-
-import Tooltip from "../shared/ui/Tooltip"
-import getDistance from "../helper/getDistance"
-import fetchRepositoryData from "../services/fetchRepositoryData"
-
 import { useUnit } from "effector-react"
 
+import Tooltip from "../shared/ui/Tooltip"
+import Loader from "../shared/ui/Loader"
+
+import fetchRepositoryData from "../services/fetchRepositoryData"
 import {
   $repositoryData,
   fetchRepositoryDataFx,
 } from "../models/RepositoryCardEffector"
-
-import { useParams } from "react-router-dom"
+import getDistance from "../helper/getDistance"
 
 const Container = styled.article`
   width: 500px;
@@ -76,6 +76,7 @@ const CardBody = styled.div`
     text-align: center;
     word-break: break-all;
     padding: 12px;
+
     &:hover {
       opacity: 0.7;
     }
@@ -98,50 +99,50 @@ const RepositoryCard: FC = () => {
   const { id } = useParams()
   let card = useUnit($repositoryData)
 
-  if (!(card && card.id === id)) {
+  if (!card || card.id !== id) {
     card = null
     fetchRepositoryDataFx(id)
   }
 
-  if (card) {
-    const avatar = card?.owner?.avatarUrl
-    const name = card?.name
-    const pushedAt = card?.pushedAt
-    const stargazerCount = card?.stargazerCount
-    const login = card?.owner?.login
-    const languages = card?.languages?.nodes
-    const description = card?.description
-    const url = card?.owner?.url
-
-    return (
-      <Container>
-        <CardHeader>
-          <span className="name">{name}</span>
-          <span className="stars">⭐{stargazerCount}</span>
-          <span className="distance">{getDistance(pushedAt)}</span>
-        </CardHeader>
-        <CardBody>
-          <span className="span">
-            <img src={avatar} className="photo" alt={name} />
-          </span>
-          <span className="login">
-            <Tooltip content={url}>{login}</Tooltip>
-          </span>
-        </CardBody>
-        <About>
-          <span className="language">
-            Language:{" "}
-            {languages.map(node => (
-              <span>{String(node.name)} </span>
-            ))}
-          </span>
-          <span className="description">About: {description}</span>
-        </About>
-      </Container>
-    )
-  } else {
-    return <h2>Загрузка</h2>
+  if (!card) {
+    return <Loader />
   }
+
+  const {
+    owner: { avatarUrl, login, url },
+    name,
+    pushedAt,
+    stargazerCount,
+    languages,
+    description,
+  } = card
+
+  return (
+    <Container>
+      <CardHeader>
+        <span className="name">{name}</span>
+        <span className="stars">⭐{stargazerCount}</span>
+        <span className="distance">{getDistance(pushedAt)}</span>
+      </CardHeader>
+      <CardBody>
+        <span className="span">
+          <img src={avatarUrl} className="photo" alt={name} />
+        </span>
+        <span className="login">
+          <Tooltip content={url}>{login}</Tooltip>
+        </span>
+      </CardBody>
+      <About>
+        <span className="language">
+          Language:{" "}
+          {languages?.nodes?.map((node, index) => (
+            <span key={index}>{String(node.name)} </span>
+          ))}
+        </span>
+        <span className="description">About: {description}</span>
+      </About>
+    </Container>
+  )
 }
 
 export default RepositoryCard
