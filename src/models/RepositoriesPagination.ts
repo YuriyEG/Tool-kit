@@ -10,7 +10,7 @@ export const $currentPage = createStore(1) // Начальная страниц�
 
 // Пример получения текущей страницы
 $currentPage.watch(currentPage => {
-  console.log("Текущая страница:", currentPage)
+  console.log("Текущая стр", currentPage)
 })
 
 persist({

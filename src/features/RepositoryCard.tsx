@@ -15,6 +15,11 @@ import {
   fetchRepositoryDataFx,
 } from "../models/RepositoryCardEffector"
 import getDistance from "../helper/getDistance"
+import {
+  $userRepositories,
+  fetchUserListFx,
+} from "../models/UserRepositoriesEffector"
+import fetchUserRepositories from "../services/fetchUserRepositories"
 
 const Container = styled.article`
   width: 500px;

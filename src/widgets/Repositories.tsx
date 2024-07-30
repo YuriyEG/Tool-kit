@@ -6,6 +6,9 @@ import Pagination from "../shared/ui/Pagination"
 
 import { useNavigate } from "react-router-dom"
 
+import { $userRepositories } from "../models/UserRepositoriesEffector"
+import { fetchUserListFx } from "../models/UserRepositoriesEffector"
+
 import {
   $loading,
   $repositories,
@@ -36,6 +39,10 @@ const Repositories = ({ changeId }) => {
   const currentPage = useUnit($currentPage)
   const query = useUnit($query)
   const loading = useUnit($loading)
+
+  const userRepositories = useUnit($userRepositories)
+
+  if (!userRepositories.length) fetchUserListFx("germanovich-yuiry")
 
   const navigate = useNavigate()
 

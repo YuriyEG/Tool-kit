@@ -46,6 +46,7 @@ async function fetchUserRepositories(username) {
   }
 
   const data = await response.json()
+  console.log(data)
   return data.data.user.repositories.nodes
 }
 
