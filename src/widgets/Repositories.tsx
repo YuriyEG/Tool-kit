@@ -3,6 +3,9 @@ import styled from "styled-components"
 import SearchInput from "../shared/ui/SearchInput"
 import RepositoryList from "../features/RepositoryList"
 import Pagination from "../shared/ui/Pagination"
+
+import { useNavigate } from "react-router-dom"
+
 import {
   $loading,
   $repositories,
@@ -34,6 +37,8 @@ const Repositories = ({ changeId }) => {
   const query = useUnit($query)
   const loading = useUnit($loading)
 
+  const navigate = useNavigate()
+
   const searchHandler = searchQuery => {
     changeQuery(searchQuery)
 
@@ -48,8 +53,7 @@ const Repositories = ({ changeId }) => {
 
   const openCardHandler = id => {
     console.log("$", id)
-    setCardId(id)
-    openCard()
+    navigate(`/details/${id}`)
   }
 
   const currentChunk = results.slice((currentPage - 1) * 10, currentPage * 10)

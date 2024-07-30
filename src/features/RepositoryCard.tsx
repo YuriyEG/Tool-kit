@@ -1,6 +1,6 @@
 import type { Repository } from "../services/fetchRepositories"
 
-import { useEffect, useState, type FC } from "react"
+import { useEffect, useLayoutEffect, useState, type FC } from "react"
 import styled from "styled-components"
 
 import Tooltip from "../shared/ui/Tooltip"
@@ -9,7 +9,12 @@ import fetchRepositoryData from "../services/fetchRepositoryData"
 
 import { useUnit } from "effector-react"
 
-import { $repositoryCard } from "../models/RepositoryCardEffector"
+import {
+  $repositoryData,
+  fetchRepositoryDataFx,
+} from "../models/RepositoryCardEffector"
+
+import { useParams } from "react-router-dom"
 
 const Container = styled.article`
   width: 500px;
@@ -90,12 +95,13 @@ const About = styled.div`
 `
 
 const RepositoryCard: FC = () => {
-  const { id } = useUnit($repositoryCard)
-  const [card, setCard] = useState(null)
+  const { id } = useParams()
+  let card = useUnit($repositoryData)
 
-  useEffect(() => {
-    fetchRepositoryData(id).then(res => setCard(res))
-  }, [])
+  if (!(card && card.id === id)) {
+    card = null
+    fetchRepositoryDataFx(id)
+  }
 
   if (card) {
     const avatar = card?.owner?.avatarUrl

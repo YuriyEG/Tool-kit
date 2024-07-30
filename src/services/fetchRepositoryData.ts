@@ -41,6 +41,7 @@ async function fetchRepositoryData(repoId: string): Promise<Repository> {
   }
 
   const data = await response.json()
+  console.log(data)
   return data.data.node
 }
 

@@ -11,6 +11,8 @@ import PortalModal from "../shared/ui/Portal"
 
 import { closeCard } from "../models/RepositoryCardEffector"
 
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+
 const Container = styled.div`
   width: 100vw;
   min-height: 100vh;
@@ -19,14 +21,19 @@ const Container = styled.div`
   padding-top: 80px;
 `
 const App = () => {
-  const { isOpen } = useUnit($repositoryCard)
   return (
     <Container>
-      <PortalModal onClose={closeCard} open={isOpen}>
+      {/* <PortalModal onClose={closeCard} open={isOpen}>
         <RepositoryCard />
-      </PortalModal>
+      </PortalModal> */}
 
-      <Repositories changeId={id => setId(id)} />
+      {/* <Repositories changeId={id => setId(id)} /> */}
+      <Router>
+        <Routes>
+          <Route path="/" element={<Repositories />} />
+          <Route path="/details/:id" element={<RepositoryCard />} />{" "}
+        </Routes>
+      </Router>
     </Container>
   )
 }

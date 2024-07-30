@@ -1,21 +1,48 @@
-import { createStore, createEvent } from "effector"
+import axios from "axios"
+import type { AxiosError } from "axios"
 
-// Событие для установки ID карточки
-export const setCardId = createEvent()
-// Событие для открытия карточки
-export const openCard = createEvent()
-// Событие для закрытия карточки
-export const closeCard = createEvent()
+import { createStore, createEvent, createEffect } from "effector"
+import { persist } from "effector-storage/session"
 
-// Состояние карточки
-export const $repositoryCard = createStore({ id: "", isOpen: false })
-  .on(setCardId, (state, id) => ({ ...state, id })) // обновляем id
-  .on(openCard, state => ({ ...state, isOpen: true })) // открываем карточку
-  .on(closeCard, state => ({ ...state, isOpen: false })) // закрываем карточку
+import fetchRepositoryData from "../services/fetchRepositoryData"
 
-// Пример использования
+interface Repository {
+  id: number
+  name: string
+}
 
-// Подписка на изменения состояния карточки
-$repositoryCard.watch(state => {
-  console.log("Card state:", state)
+interface FetchError {
+  message: string
+}
+
+export const fetchRepositoryDataFx = createEffect<
+  string,
+  Repository,
+  FetchError
+>(fetchRepositoryData)
+
+export const loadData = createEvent<string>()
+
+export const $repositoryData = createStore<Repository[]>([])
+  .on(loadData, () => [])
+  .on(fetchRepositoryDataFx.doneData, (state, repositoryData) => repositoryData)
+
+export const $loading = createStore<boolean>(false).on(
+  fetchRepositoryDataFx.pending,
+  (_, pending) => pending,
+)
+
+export const $error = createStore<FetchError | null>(null)
+  .on(fetchRepositoryDataFx.failData, (_, error) => error)
+  .reset(fetchRepositoryDataFx.doneData)
+
+loadData.watch(searchQuery => {
+  $error.watch(() => null)
+  fetchRepositoryDataFx(searchQuery)
+})
+
+persist({
+  source: $repositoryData,
+  target: $repositoryData,
+  key: "REPOSITORYDATA",
 })
