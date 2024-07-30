@@ -29,9 +29,11 @@ const CardHeader = styled.div`
   align-items: center;
   margin-bottom: 20px;
 
-  .title {
+  .name {
     font-size: 22px;
     font-weight: bold;
+    overflow: hidden;
+    width: 250px;
   }
   .stars {
     font-size: 18px;
@@ -44,6 +46,7 @@ const CardHeader = styled.div`
     font-size: 12px;
     font-weight: bold;
     opacity: 0.6;
+    overflow: hidden;
   }
 `
 
@@ -59,11 +62,15 @@ const CardBody = styled.div`
     border-radius: 50%;
   }
 
-  .link {
+  .login {
     font-size: 24px;
     font-weight: bold;
     margin: 0 auto;
     text-decoration: none;
+    width: 100%;
+    text-align: center;
+    word-break: break-all;
+    padding: 12px;
     &:hover {
       opacity: 0.7;
     }
@@ -103,9 +110,7 @@ const RepositoryCard: FC = () => {
     return (
       <Container>
         <CardHeader>
-          <span className="title">
-            <Tooltip content={<p>Title</p>}>{name}</Tooltip>
-          </span>
+          <span className="name">{name}</span>
           <span className="stars">⭐{stargazerCount}</span>
           <span className="distance">{getDistance(pushedAt)}</span>
         </CardHeader>
@@ -113,7 +118,7 @@ const RepositoryCard: FC = () => {
           <span className="span">
             <img src={avatar} className="photo" alt={name} />
           </span>
-          <span className="link">
+          <span className="login">
             <Tooltip content={url}>{login}</Tooltip>
           </span>
         </CardBody>

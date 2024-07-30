@@ -1,5 +1,11 @@
 import styled from "styled-components"
 
+const InputWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin-bottom: 42px;
+`
 const StyledInput = styled.input`
   padding: 10px;
   width: 100%;
@@ -10,7 +16,6 @@ const StyledInput = styled.input`
   text-indent: 10px;
   color: rgba(0, 0, 0, 1);
   background-color: white;
-  margin-bottom: 42px;
 
   &:focus {
     border-color: rgba(0, 0, 0, 0.6);
@@ -20,15 +25,30 @@ const StyledInput = styled.input`
     color: rgba(3, 138, 255, 0.8);
   }
 `
+const CloseButton = styled.div`
+  position: absolute;
+  top: 0;
+  right: 12px;
 
-const SearchInput = ({ searchHandler, query }) => {
+  font-size: 24px;
+  line-height: 24px;
+  height: 50px;
+  width: 50px;
+  padding: 10px;
+`
+
+const SearchInput = ({ searchHandler, query, onClear }) => {
   return (
-    <StyledInput
-      type="text"
-      placeholder="Поиск репозиториев на GitHub"
-      value={query}
-      onChange={e => searchHandler(e.target.value)}
-    />
+    <InputWrapper>
+      {" "}
+      <StyledInput
+        type="text"
+        placeholder="Поиск репозиториев на GitHub"
+        value={query}
+        onChange={e => searchHandler(e.target.value)}
+      />
+      <CloseButton onClick={onClear}>&#215;</CloseButton>
+    </InputWrapper>
   )
 }
 

@@ -1,8 +1,13 @@
+import styled from "styled-components"
 import RepositoryItem from "./RepositoryItem"
+
+const StyledList = styled.ul`
+  margin-bottom: 20px;
+`
 
 const RepositoryList = ({ list = [], select, changeId }) => {
   return (
-    <ul>
+    <StyledList>
       {list.map(item => (
         <RepositoryItem
           item={item}
@@ -11,7 +16,7 @@ const RepositoryList = ({ list = [], select, changeId }) => {
           changeId={changeId}
         />
       ))}
-    </ul>
+    </StyledList>
   )
 }
 

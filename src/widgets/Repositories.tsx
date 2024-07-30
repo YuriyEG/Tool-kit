@@ -42,6 +42,10 @@ const Repositories = ({ changeId }) => {
     }
   }
 
+  const clearHandler = () => {
+    changeQuery("")
+  }
+
   const openCardHandler = id => {
     console.log("$", id)
     setCardId(id)
@@ -51,7 +55,11 @@ const Repositories = ({ changeId }) => {
   const currentChunk = results.slice((currentPage - 1) * 10, currentPage * 10)
   return (
     <Container>
-      <SearchInput searchHandler={searchHandler} query={query} />
+      <SearchInput
+        searchHandler={searchHandler}
+        query={query}
+        onClear={clearHandler}
+      />
       {!loading ? (
         <RepositoryList list={currentChunk} changeId={openCardHandler} />
       ) : (
