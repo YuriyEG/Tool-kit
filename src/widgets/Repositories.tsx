@@ -30,6 +30,10 @@ const Container = styled.div`
   min-height: 200px;
 `
 
+const Note = styled.div`
+  padding: 20px;
+`
+
 const Repositories = ({ changeId }) => {
   const results = useUnit($repositories)
 
@@ -60,8 +64,8 @@ const Repositories = ({ changeId }) => {
         query={query}
         onClear={clearHandler}
       />
-      {!query && <p>Репозитории текущего пользователя</p>}
-      {query && !results.length && <h3>Результатов не найдено</h3>}
+      {!query && <Note>Репозитории текущего пользователя</Note>}
+      {query && !results.length && <Note>Результатов не найдено</Note>}
 
       {!loading ? (
         !query ? (
