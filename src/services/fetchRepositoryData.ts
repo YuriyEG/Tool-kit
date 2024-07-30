@@ -8,6 +8,7 @@ async function fetchRepositoryData(repoId: string): Promise<Repository> {
           owner {
             login
             avatarUrl
+            url
           }
           stargazerCount
           pushedAt

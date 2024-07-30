@@ -98,6 +98,7 @@ const RepositoryCard: FC = () => {
     const login = card?.owner?.login
     const languages = card?.languages?.nodes
     const description = card?.description
+    const url = card?.owner?.url
 
     return (
       <Container>
@@ -112,9 +113,9 @@ const RepositoryCard: FC = () => {
           <span className="span">
             <img src={avatar} className="photo" alt={name} />
           </span>
-          <a href={login} className="link">
-            {login}
-          </a>
+          <span className="link">
+            <Tooltip content={url}>{login}</Tooltip>
+          </span>
         </CardBody>
         <About>
           <span className="language">

@@ -10,8 +10,6 @@ const TooltipWrapper = styled.span`
 
 const TooltipText = styled.a`
   visibility: hidden;
-  min-width: 100px;
-  min-height: 20px;
   background-color: rgba(40, 40, 40, 1);
   color: rgba(255, 255, 255, 1);
   text-align: center;
@@ -25,6 +23,9 @@ const TooltipText = styled.a`
   opacity: 0;
   transition: 0.2s ease-in all;
   transition-delay: 0.2;
+  font-size: 18px;
+  line-height: 18px;
+  font-family: Regular, Arial;
   ${TooltipWrapper}:hover & {
     visibility: visible;
     opacity: 1;
