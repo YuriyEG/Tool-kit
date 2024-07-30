@@ -7,6 +7,7 @@ import {
   $loading,
   $repositories,
   fetchListFx,
+  loadList,
 } from "../models/RepositoriesEffector"
 import { useUnit } from "effector-react"
 import debouncer from "../helper/debouncer"
@@ -15,6 +16,9 @@ import { $repositoryCard } from "../models/RepositoryCardEffector"
 import { $currentPage } from "../models/RepositoriesPagination"
 import { changeCurrentPage } from "../models/RepositoriesPagination"
 import { setCardId, openCard } from "../models/RepositoryCardEffector"
+import { $query } from "../models/QuerieEffectror"
+import { changeQuery } from "../models/QuerieEffectror"
+import Loader from "../shared/ui/Loader"
 
 const debouncedFx = debouncer(fetchListFx, 550)
 
@@ -25,18 +29,17 @@ const Container = styled.div`
 `
 
 const Repositories = ({ changeId }) => {
-  const [query, setQuery] = useState("")
-
   const results = useUnit($repositories)
   const currentPage = useUnit($currentPage)
+  const query = useUnit($query)
   const loading = useUnit($loading)
 
   const searchHandler = searchQuery => {
-    setQuery(searchQuery)
-    if (!searchQuery) {
-      return
+    changeQuery(searchQuery)
+
+    if (searchQuery.trim()) {
+      debouncedFx(searchQuery)
     }
-    debouncedFx(searchQuery)
   }
 
   const openCardHandler = id => {
@@ -49,13 +52,20 @@ const Repositories = ({ changeId }) => {
   return (
     <Container>
       <SearchInput searchHandler={searchHandler} query={query} />
-      <RepositoryList list={currentChunk} changeId={openCardHandler} />
-      <Pagination
-        totalItems={results.length}
-        itemsPerPage={10}
-        onPageChange={changeCurrentPage}
-        currentPage={currentPage}
-      />
+      {!loading ? (
+        <RepositoryList list={currentChunk} changeId={openCardHandler} />
+      ) : (
+        <Loader />
+      )}
+
+      {results.length > 0 && (
+        <Pagination
+          totalItems={results.length}
+          itemsPerPage={10}
+          onPageChange={changeCurrentPage}
+          currentPage={currentPage}
+        />
+      )}
     </Container>
   )
 }

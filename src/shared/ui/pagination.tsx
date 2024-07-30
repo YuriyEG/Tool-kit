@@ -38,7 +38,7 @@ const Pagination: React.FC<IPaginationProps> = ({
   currentPage,
 }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage)
-  const maxButtons = 10
+  const maxButtons = 5
 
   const calculatePageButtons = () => {
     let pageNumbers: number[] = []

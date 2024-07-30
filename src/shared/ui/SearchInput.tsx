@@ -5,15 +5,19 @@ const StyledInput = styled.input`
   width: 100%;
   height: 50px;
   border: 2px solid rgba(204, 204, 204, 1);
-  border-radius: 8px;
+  border-radius: 18px;
   font-size: 18px;
   text-indent: 10px;
-  color: rgba(0, 0, 0, 0.9);
-  margin-bottom: 20px;
+  color: rgba(0, 0, 0, 1);
+  background-color: white;
+  margin-bottom: 42px;
 
   &:focus {
     border-color: rgba(0, 0, 0, 0.6);
     outline: none;
+  }
+  &::placeholder {
+    color: rgba(3, 138, 255, 0.8);
   }
 `
 
