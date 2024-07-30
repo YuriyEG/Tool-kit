@@ -4,8 +4,6 @@ import SearchInput from "../shared/ui/SearchInput"
 import RepositoryList from "../features/RepositoryList"
 import Pagination from "../shared/ui/Pagination"
 
-import { useNavigate } from "react-router-dom"
-
 import { $userRepositories } from "../models/UserRepositoriesEffector"
 import { fetchUserListFx } from "../models/UserRepositoriesEffector"
 
@@ -13,15 +11,13 @@ import {
   $loading,
   $repositories,
   fetchListFx,
-  loadList,
 } from "../models/RepositoriesEffector"
 import { useUnit } from "effector-react"
 import debouncer from "../helper/debouncer"
 
-import { $repositoryCard } from "../models/RepositoryCardEffector"
 import { $currentPage } from "../models/RepositoriesPagination"
 import { changeCurrentPage } from "../models/RepositoriesPagination"
-import { setCardId, openCard } from "../models/RepositoryCardEffector"
+
 import { $query } from "../models/QuerieEffectror"
 import { changeQuery } from "../models/QuerieEffectror"
 import Loader from "../shared/ui/Loader"
@@ -36,15 +32,13 @@ const Container = styled.div`
 
 const Repositories = ({ changeId }) => {
   const results = useUnit($repositories)
-  const currentPage = useUnit($currentPage)
+
   const query = useUnit($query)
   const loading = useUnit($loading)
 
   const userRepositories = useUnit($userRepositories)
 
   if (!userRepositories.length) fetchUserListFx("germanovich-yuiry")
-
-  const navigate = useNavigate()
 
   const searchHandler = searchQuery => {
     changeQuery(searchQuery)
@@ -59,12 +53,6 @@ const Repositories = ({ changeId }) => {
     changeQuery("")
   }
 
-  const openCardHandler = id => {
-    console.log("$", id)
-    navigate(`/details/${id}`)
-  }
-
-  const currentChunk = results.slice((currentPage - 1) * 10, currentPage * 10)
   return (
     <Container>
       <SearchInput
@@ -72,19 +60,17 @@ const Repositories = ({ changeId }) => {
         query={query}
         onClear={clearHandler}
       />
+      {!query && <p>Репозитории текущего пользователя</p>}
+      {query && !results.length && <h3>Результатов не найдено</h3>}
+
       {!loading ? (
-        <RepositoryList list={currentChunk} changeId={openCardHandler} />
+        !query ? (
+          <RepositoryList results={userRepositories} />
+        ) : (
+          <RepositoryList results={results} />
+        )
       ) : (
         <Loader />
-      )}
-
-      {results.length > 0 && (
-        <Pagination
-          totalItems={results.length}
-          itemsPerPage={10}
-          onPageChange={changeCurrentPage}
-          currentPage={currentPage}
-        />
       )}
     </Container>
   )
