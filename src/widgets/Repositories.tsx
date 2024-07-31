@@ -70,7 +70,7 @@ const Repositories = () => {
       {query && results.length === 0 && <Note>Результатов не найдено</Note>}
       {loading && <Loader />}
       {!query && <RepositoryList results={userRepositories} />}
-      {query && <RepositoryList results={results} />}\
+      {query && <RepositoryList results={results} />}
     </Container>
   )
 }

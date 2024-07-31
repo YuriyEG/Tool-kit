@@ -25,7 +25,7 @@ const Container = styled.article`
   width: 500px;
   height: auto;
   margin: 0 auto;
-  padding: 20px;
+  padding: 28px;
   background-color: rgba(255, 255, 255, 1);
   box-shadow: 1px 1px 12px 1px rgba(0, 0, 0, 0.5);
   font-family: "Regular", Arial;
@@ -44,6 +44,7 @@ const CardHeader = styled.div`
     font-weight: bold;
     overflow: hidden;
     width: 250px;
+    text-align: left;
   }
   .stars {
     font-size: 18px;
@@ -96,7 +97,12 @@ const About = styled.div`
   align-items: flex-start;
 
   .language {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
+  }
+  .description {
+  }
+  .bold {
+    font-weight: bold;
   }
 `
 
@@ -139,12 +145,16 @@ const RepositoryCard: FC = () => {
       </CardBody>
       <About>
         <span className="language">
-          Language:{" "}
-          {languages?.nodes?.map((node, index) => (
-            <span key={index}>{String(node.name)} </span>
+          <span className="bold">Language: </span>
+
+          {languages?.nodes?.map((node, i) => (
+            <span key={i}>{String(node.name)} </span>
           ))}
         </span>
-        <span className="description">About: {description}</span>
+        <span className="description">
+          <span className="bold">About: </span>
+          {description}
+        </span>
       </About>
     </Container>
   )

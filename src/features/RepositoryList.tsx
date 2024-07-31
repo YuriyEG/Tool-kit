@@ -12,6 +12,9 @@ import { changeCurrentPage } from "../models/RepositoriesPagination"
 const StyledList = styled.ul`
   margin-bottom: 20px;
 `
+const Gap = styled.div`
+  height: 20px;
+`
 
 const RepositoryList = ({ results }) => {
   const navigate = useNavigate()
@@ -32,7 +35,7 @@ const RepositoryList = ({ results }) => {
           changeId={openCardHandler}
         />
       ))}
-
+      <Gap />
       {results.length > 10 && (
         <Pagination
           totalItems={results.length}
