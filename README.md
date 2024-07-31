@@ -1,4 +1,4 @@
-https://tool-18obpl1us-yuriyegs-projects.vercel.app/details/MDEwOlJlcG9zaXRvcnk5ODE3ODk4
+https://tool-18obpl1us-yuriyegs-projects.vercel.app/
 
 # Тестовое задание frontend developer
 
