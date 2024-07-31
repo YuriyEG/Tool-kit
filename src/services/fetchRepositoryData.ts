@@ -1,3 +1,5 @@
+import { GRAPHQLTOKEN } from "../mockAccessData/tokenAndUserName"
+
 async function fetchRepositoryData(repoId: string): Promise<Repository> {
   const query = `
     query ($repoId: ID!) {
@@ -26,7 +28,7 @@ async function fetchRepositoryData(repoId: string): Promise<Repository> {
   const response = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
-      Authorization: `Bearer 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`,
+      Authorization: `Bearer ${GRAPHQLTOKEN}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({

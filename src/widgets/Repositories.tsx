@@ -18,6 +18,7 @@ import { changeCurrentPage } from "../models/RepositoriesPagination"
 import { $query } from "../models/QuerieEffectror"
 import { changeQuery } from "../models/QuerieEffectror"
 import Loader from "../shared/ui/Loader"
+import { CURRENTUSER } from "../mockAccessData/tokenAndUserName"
 
 const debouncedFx = debouncer(fetchListFx, 550)
 
@@ -39,7 +40,7 @@ const Repositories = () => {
 
   const userRepositories = useUnit($userRepositories)
 
-  if (!userRepositories.length) fetchUserListFx("germanovich-yuiry")
+  if (!userRepositories.length) fetchUserListFx(CURRENTUSER)
 
   const searchHandler = searchQuery => {
     changeQuery(searchQuery)
@@ -64,7 +65,7 @@ const Repositories = () => {
       {query.length === 0 && userRepositories.length !== 0 && (
         <Note>Репозитории текущего пользователя</Note>
       )}
-      {query.length !== 0 && results.length === 0 && (
+      {query.length !== 0 && results.length === 0 && !loading && (
         <Note>Результатов не найдено</Note>
       )}
       {loading && <Loader />}

@@ -1,3 +1,5 @@
+import { GRAPHQLTOKEN } from "../mockAccessData/tokenAndUserName"
+
 const query = `
   query($username: String!) {
     user(login: $username) {
@@ -29,7 +31,7 @@ async function fetchUserRepositories(username) {
   const response = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
-      Authorization: `Bearer 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`,
+      Authorization: `Bearer ${GRAPHQLTOKEN}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
