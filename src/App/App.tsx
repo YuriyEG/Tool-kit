@@ -3,13 +3,6 @@ import styled from "styled-components"
 import Repositories from "../widgets/Repositories"
 
 import RepositoryCard from "../features/RepositoryCard"
-import { useEffect, useState } from "react"
-
-import { $repositoryCard } from "../models/RepositoryCardEffector"
-import { useUnit } from "effector-react"
-import PortalModal from "../shared/ui/Portal"
-
-import { closeCard } from "../models/RepositoryCardEffector"
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 

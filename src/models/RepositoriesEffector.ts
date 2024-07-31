@@ -1,6 +1,3 @@
-import axios from "axios"
-import type { AxiosError } from "axios"
-
 import { createStore, createEvent, createEffect } from "effector"
 import { persist } from "effector-storage/session"
 

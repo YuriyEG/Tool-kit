@@ -1,8 +1,6 @@
-import { useEffect, useState, useTransition } from "react"
 import styled from "styled-components"
 import SearchInput from "../shared/ui/SearchInput"
 import RepositoryList from "../features/RepositoryList"
-import Pagination from "../shared/ui/Pagination"
 
 import { $userRepositories } from "../models/UserRepositoriesEffector"
 import { fetchUserListFx } from "../models/UserRepositoriesEffector"
@@ -15,7 +13,6 @@ import {
 import { useUnit } from "effector-react"
 import debouncer from "../helper/debouncer"
 
-import { $currentPage } from "../models/RepositoriesPagination"
 import { changeCurrentPage } from "../models/RepositoriesPagination"
 
 import { $query } from "../models/QuerieEffectror"
@@ -64,13 +61,15 @@ const Repositories = () => {
         query={query}
         onClear={clearHandler}
       />
-      {query.length === 0 && userRepositories.length && (
+      {query.length === 0 && userRepositories.length !== 0 && (
         <Note>Репозитории текущего пользователя</Note>
       )}
-      {query && results.length === 0 && <Note>Результатов не найдено</Note>}
+      {query.length !== 0 && results.length === 0 && (
+        <Note>Результатов не найдено</Note>
+      )}
       {loading && <Loader />}
-      {!query && <RepositoryList results={userRepositories} />}
-      {query && <RepositoryList results={results} />}
+      {query.length === 0 && <RepositoryList results={userRepositories} />}
+      {!loading && query.length !== 0 && <RepositoryList results={results} />}
     </Container>
   )
 }

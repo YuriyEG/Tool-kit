@@ -1,6 +1,3 @@
-import type { Repository } from "../services/fetchRepositories"
-
-import { useEffect, useLayoutEffect, useState, type FC } from "react"
 import { useParams } from "react-router-dom"
 
 import styled from "styled-components"
@@ -9,17 +6,11 @@ import { useUnit } from "effector-react"
 import Tooltip from "../shared/ui/Tooltip"
 import Loader from "../shared/ui/Loader"
 
-import fetchRepositoryData from "../services/fetchRepositoryData"
 import {
   $repositoryData,
   fetchRepositoryDataFx,
 } from "../models/RepositoryCardEffector"
 import getDistance from "../helper/getDistance"
-import {
-  $userRepositories,
-  fetchUserListFx,
-} from "../models/UserRepositoriesEffector"
-import fetchUserRepositories from "../services/fetchUserRepositories"
 
 const Container = styled.article`
   width: 500px;
@@ -132,6 +123,7 @@ const RepositoryCard: FC = () => {
     <Container>
       <CardHeader>
         <span className="name">{name}</span>
+
         <span className="stars">⭐{stargazerCount}</span>
         <span className="distance">{getDistance(pushedAt)}</span>
       </CardHeader>
