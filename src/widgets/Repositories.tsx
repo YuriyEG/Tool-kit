@@ -34,7 +34,7 @@ const Note = styled.div`
   padding: 20px;
 `
 
-const Repositories = ({ changeId }) => {
+const Repositories = () => {
   const results = useUnit($repositories)
 
   const query = useUnit($query)
@@ -64,18 +64,13 @@ const Repositories = ({ changeId }) => {
         query={query}
         onClear={clearHandler}
       />
-      {!query && <Note>Репозитории текущего пользователя</Note>}
-      {query && !results.length && <Note>Результатов не найдено</Note>}
-
-      {!loading ? (
-        !query ? (
-          <RepositoryList results={userRepositories} />
-        ) : (
-          <RepositoryList results={results} />
-        )
-      ) : (
-        <Loader />
+      {query.length === 0 && userRepositories.length && (
+        <Note>Репозитории текущего пользователя</Note>
       )}
+      {query && results.length === 0 && <Note>Результатов не найдено</Note>}
+      {loading && <Loader />}
+      {!query && <RepositoryList results={userRepositories} />}
+      {query && <RepositoryList results={results} />}\
     </Container>
   )
 }
