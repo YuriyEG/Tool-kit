@@ -1,3 +1,4 @@
+import type { IUserRepository } from "../types/User.types"
 import { GRAPHQLTOKEN } from "../mockAccessData/tokenAndUserName"
 
 const query = `
@@ -27,7 +28,9 @@ const query = `
   }
 `
 
-async function fetchUserRepositories(username) {
+async function fetchUserRepositories(
+  username: string,
+): Promise<IUserRepository[]> {
   const response = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
@@ -48,7 +51,6 @@ async function fetchUserRepositories(username) {
   }
 
   const data = await response.json()
-  console.log(data)
   return data.data.user.repositories.nodes
 }
 

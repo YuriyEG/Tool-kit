@@ -1,6 +1,8 @@
 import { GRAPHQLTOKEN } from "../mockAccessData/tokenAndUserName"
 
-async function fetchRepositories(query: string): Promise<Repository[]> {
+import type { IRepository } from "../types/Repository.types"
+
+async function fetchRepositories(query: string): Promise<IRepository[]> {
   const response = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
@@ -44,21 +46,6 @@ async function fetchRepositories(query: string): Promise<Repository[]> {
 
   const data = await response.json()
   return data.data.search.nodes
-}
-
-export interface Repository {
-  id: string
-  name: string
-  owner: {
-    login: string
-  }
-  url: string
-  stargazerCount: number
-  defaultBranchRef?: {
-    target?: {
-      committedDate?: string
-    }
-  }
 }
 
 export default fetchRepositories

@@ -1,13 +1,14 @@
+import type { Store } from "effector"
+
 import { createStore, createEvent } from "effector"
 import { persist } from "effector-storage/session"
 
-export const changeQuery = createEvent<number>()
+export const changeQuery = createEvent<string>()
 
-export const $query = createStore("").on(changeQuery, (_, newPage) => newPage)
-
-$query.watch(currentPage => {
-  console.log("Текущая страница:", currentPage)
-})
+export const $query: Store<string> = createStore<string>("").on(
+  changeQuery,
+  (_, newPage) => newPage,
+)
 
 persist({
   source: $query,

@@ -1,30 +1,34 @@
+import type { IRepositoryDetails } from "../types/RepositoryDetails.types"
+
 import { GRAPHQLTOKEN } from "../mockAccessData/tokenAndUserName"
 
-async function fetchRepositoryData(repoId: string): Promise<Repository> {
-  const query = `
-    query ($repoId: ID!) {
-      node(id: $repoId) {
-        ... on Repository {
-          id
+const query = `
+query ($repoId: ID!) {
+  node(id: $repoId) {
+    ... on Repository {
+      id
+      name
+      owner {
+        login
+        avatarUrl
+        url
+      }
+      stargazerCount
+      pushedAt
+      languages(first: 10) {
+        nodes {
           name
-          owner {
-            login
-            avatarUrl
-            url
-          }
-          stargazerCount
-          pushedAt
-          languages(first: 10) {
-            nodes {
-              name
-            }
-          }
-          description
         }
       }
+      description
     }
-  `
+  }
+}
+`
 
+async function fetchRepositoryData(
+  repoId: string,
+): Promise<IRepositoryDetails> {
   const response = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
@@ -43,25 +47,7 @@ async function fetchRepositoryData(repoId: string): Promise<Repository> {
   }
 
   const data = await response.json()
-  console.log(data)
   return data.data.node
-}
-
-export interface Repository {
-  id: string
-  name: string
-  owner: {
-    login: string
-    avatarUrl: string
-  }
-  stargazerCount: number
-  pushedAt: string
-  languages: {
-    nodes: {
-      name: string
-    }[]
-  }
-  description: string
 }
 
 export default fetchRepositoryData

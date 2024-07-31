@@ -16,11 +16,6 @@ const Container = styled.div`
 const App = () => {
   return (
     <Container>
-      {/* <PortalModal onClose={closeCard} open={isOpen}>
-        <RepositoryCard />
-      </PortalModal> */}
-
-      {/* <Repositories changeId={id => setId(id)} /> */}
       <Router>
         <Routes>
           <Route path="/" element={<Repositories />} />
