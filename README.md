@@ -1,3 +1,5 @@
+https://tool-18obpl1us-yuriyegs-projects.vercel.app/details/MDEwOlJlcG9zaXRvcnk5ODE3ODk4
+
 # Тестовое задание frontend developer
 
 Необходимо используя Github GraphQL API (https://docs.github.com/ru/graphql) создать frontend приложение, которое состоит из двух страниц:
