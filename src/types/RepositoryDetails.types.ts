@@ -4,6 +4,7 @@ export interface IRepositoryDetails {
   owner: {
     login: string
     avatarUrl: string
+    url: string
   }
   stargazerCount: number
   pushedAt: string

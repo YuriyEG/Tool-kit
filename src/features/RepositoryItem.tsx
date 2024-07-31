@@ -1,6 +1,9 @@
+import type { FC } from "react"
 import styled from "styled-components"
 import Tooltip from "../shared/ui/Tooltip"
+
 import getDistance from "../helper/getDistance"
+import type { IRepositoryItemProps } from "../types/RepositoryItem.types"
 
 const RepositoryContainer = styled.li`
   display: flex;
@@ -14,6 +17,7 @@ const RepositoryContainer = styled.li`
   margin: 0 auto;
   margin-bottom: 2px;
   background-color: rgba(249, 249, 249, 1);
+  transition: background-color 0.3s;
 
   &:hover {
     background-color: rgba(241, 241, 241, 1);
@@ -24,7 +28,6 @@ const RepositoryContainer = styled.li`
 const RepositoryName = styled.a`
   font-size: 1.2em;
   color: rgba(0, 0, 0, 1);
-  font-size: 18px;
   max-width: 250px;
   text-align: left;
   overflow: hidden;
@@ -55,7 +58,7 @@ const Distance = styled.span`
   align-self: flex-end;
 `
 
-const RepositoryItem = ({ item, select, changeId }) => {
+const RepositoryItem: FC<IRepositoryItemProps> = ({ item, changeId }) => {
   const { id, name, url, stargazerCount, defaultBranchRef } = item
   const distance = getDistance(defaultBranchRef?.target?.committedDate)
 

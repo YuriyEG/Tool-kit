@@ -47,5 +47,6 @@ async function fetchRepositories(query: string): Promise<IRepository[]> {
   const data = await response.json()
   return data.data.search.nodes
 }
+export type FetchRepositoriesType = ReturnType<typeof fetchRepositories>
 
 export default fetchRepositories

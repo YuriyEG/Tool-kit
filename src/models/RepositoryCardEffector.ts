@@ -16,8 +16,8 @@ export const fetchRepositoryDataFx = createEffect<
 
 export const loadData = createEvent<string>()
 
-export const $repositoryData = createStore<IRepositoryDetails[]>([])
-  .on(loadData, () => [])
+export const $repositoryData = createStore<IRepositoryDetails | null>(null)
+  .on(loadData, () => null)
   .on(fetchRepositoryDataFx.doneData, (_, repositoryData) => repositoryData)
 
 export const $loading = createStore<boolean>(false).on(

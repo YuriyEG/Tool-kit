@@ -1,3 +1,4 @@
+import type { FC } from "react"
 import { useParams } from "react-router-dom"
 
 import styled from "styled-components"
@@ -37,6 +38,7 @@ const CardHeader = styled.div`
     width: 250px;
     text-align: left;
   }
+
   .stars {
     font-size: 18px;
     font-weight: bold;
@@ -44,6 +46,7 @@ const CardHeader = styled.div`
     margin-left: auto;
     margin-right: 18px;
   }
+
   .distance {
     font-size: 12px;
     font-weight: bold;
@@ -57,6 +60,7 @@ const CardBody = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 
   .photo {
     width: 250px;
@@ -78,8 +82,6 @@ const CardBody = styled.div`
       opacity: 0.7;
     }
   }
-
-  margin-bottom: 20px;
 `
 
 const About = styled.div`
@@ -90,23 +92,18 @@ const About = styled.div`
   .language {
     margin-bottom: 12px;
   }
-  .description {
-  }
+
   .bold {
     font-weight: bold;
   }
 `
 
 const RepositoryCard: FC = () => {
-  const { id } = useParams()
-  let card = useUnit($repositoryData)
+  const { id } = useParams<{ id: string }>()
+  const card = useUnit($repositoryData)
 
   if (!card || card.id !== id) {
-    card = null
-    fetchRepositoryDataFx(id)
-  }
-
-  if (!card) {
+    fetchRepositoryDataFx(id!)
     return <Loader />
   }
 
@@ -123,24 +120,20 @@ const RepositoryCard: FC = () => {
     <Container>
       <CardHeader>
         <span className="name">{name}</span>
-
         <span className="stars">⭐{stargazerCount}</span>
         <span className="distance">{getDistance(pushedAt)}</span>
       </CardHeader>
       <CardBody>
-        <span className="span">
-          <img src={avatarUrl} className="photo" alt={name} />
-        </span>
-        <span className="login">
-          <Tooltip content={url}>{login}</Tooltip>
-        </span>
+        <img src={avatarUrl} className="photo" alt={name} />
+        <Tooltip content={url}>
+          <span className="login">{login}</span>
+        </Tooltip>
       </CardBody>
       <About>
         <span className="language">
           <span className="bold">Language: </span>
-
-          {languages?.nodes?.map((node, i) => (
-            <span key={i}>{String(node.name)} </span>
+          {languages?.nodes.map((node, index) => (
+            <span key={index}>{String(node.name)} </span>
           ))}
         </span>
         <span className="description">

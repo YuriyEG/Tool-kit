@@ -1,48 +1,54 @@
+import type { IRepository } from "../types/Repository.types"
+import type { FC } from "react"
+
 import styled from "styled-components"
+import { useUnit } from "effector-react"
+
 import SearchInput from "../shared/ui/SearchInput"
 import RepositoryList from "../features/RepositoryList"
+import Loader from "../shared/ui/Loader"
 
-import { $userRepositories } from "../models/UserRepositoriesEffector"
-import { fetchUserListFx } from "../models/UserRepositoriesEffector"
+import { debounce } from "lodash"
 
 import {
   $loading,
   $repositories,
   fetchListFx,
 } from "../models/RepositoriesEffector"
-import { useUnit } from "effector-react"
-import debouncer from "../helper/debouncer"
-
+import {
+  $userRepositories,
+  fetchUserListFx,
+} from "../models/UserRepositoriesEffector"
+import { $query, changeQuery } from "../models/QueryEffector"
 import { changeCurrentPage } from "../models/RepositoriesPaginationEffector"
 
-import { $query } from "../models/QuerieEffectror"
-import { changeQuery } from "../models/QuerieEffectror"
-import Loader from "../shared/ui/Loader"
 import { CURRENTUSER } from "../mockAccessData/tokenAndUserName"
-
-const debouncedFx = debouncer(fetchListFx, 550)
 
 const Container = styled.div`
   margin: 0 auto;
   width: 500px;
   min-height: 200px;
+  display: flex;
+  flex-direction: column;
 `
 
 const Note = styled.div`
   padding: 20px;
 `
 
-const Repositories = () => {
-  const results = useUnit($repositories)
+const debouncedFx = debounce(fetchListFx, 300)
 
+const Repositories: FC = () => {
+  const results: IRepository[] = useUnit($repositories)
   const query = useUnit($query)
   const loading = useUnit($loading)
+  const userRepositories: IRepository[] = useUnit($userRepositories)
 
-  const userRepositories = useUnit($userRepositories)
+  if (!userRepositories.length) {
+    fetchUserListFx(CURRENTUSER)
+  }
 
-  if (!userRepositories.length) fetchUserListFx(CURRENTUSER)
-
-  const searchHandler = searchQuery => {
+  const searchHandler = (searchQuery: string) => {
     changeQuery(searchQuery)
     changeCurrentPage(1)
 
@@ -62,15 +68,15 @@ const Repositories = () => {
         query={query}
         onClear={clearHandler}
       />
-      {query.length === 0 && userRepositories.length !== 0 && (
+      {query.length === 0 && userRepositories.length > 0 && (
         <Note>Репозитории текущего пользователя</Note>
       )}
-      {query.length !== 0 && results.length === 0 && !loading && (
+      {query.length > 0 && results.length === 0 && !loading && (
         <Note>Результатов не найдено</Note>
       )}
       {loading && <Loader />}
       {query.length === 0 && <RepositoryList results={userRepositories} />}
-      {!loading && query.length !== 0 && <RepositoryList results={results} />}
+      {query.length > 0 && !loading && <RepositoryList results={results} />}
     </Container>
   )
 }
