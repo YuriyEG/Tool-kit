@@ -5,6 +5,7 @@ import Repositories from "../widgets/Repositories"
 import RepositoryCard from "../features/RepositoryCard"
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import PortalModal from "../shared/ui/Portal"
 
 const Container = styled.div`
   width: 100vw;

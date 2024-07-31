@@ -6,6 +6,8 @@ import { createPortal } from "react-dom"
 
 type Props = {
   children: React.ReactNode
+  open: boolean
+  onClose: () => void
 }
 
 const OverlayContainer = styled.div`
@@ -16,8 +18,8 @@ const OverlayContainer = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: gray;
-  opacity: 100;
+  background-color: rgba(128, 128, 128, 1);
+  opacity: 1;
   z-index: 1;
 `
 
@@ -32,30 +34,29 @@ const CloseButton = styled.button`
   z-index: 2;
 `
 
-const PortalModal: FC<Props> = (props: Props) => {
-  const { children } = props
+const PortalModal: FC<Props> = ({ children, open, onClose }) => {
   const element = document.getElementById("modal-root")!
 
-  const Overlay = ({ children }) => {
+  const Overlay: FC<{ children: React.ReactNode }> = ({ children }) => {
     useEffect(() => {
-      const html = document.getElementsByTagName("html")
-      html[0].style.overflow = "hidden"
+      document.body.style.overflow = "hidden"
       return () => {
-        const html = document.getElementsByTagName("html")
-        html[0].style.overflow = "scroll"
+        document.body.style.overflow = "auto"
       }
     }, [])
+
     return (
       <OverlayContainer>
-        <CloseButton onClick={props.onClose}>&times;</CloseButton>
+        <CloseButton onClick={onClose}>&times;</CloseButton>
         {children}
       </OverlayContainer>
     )
   }
 
-  if (props.open) {
+  if (open) {
     return createPortal(<Overlay>{children}</Overlay>, element)
   }
+  return null
 }
 
 export default PortalModal

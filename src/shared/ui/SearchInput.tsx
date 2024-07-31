@@ -1,3 +1,7 @@
+import type { ISearchInputProps } from "../../types/SearchInput.types"
+
+import type React from "react"
+
 import styled from "styled-components"
 
 const InputWrapper = styled.div`
@@ -6,6 +10,7 @@ const InputWrapper = styled.div`
   height: 50px;
   margin-bottom: 42px;
 `
+
 const StyledInput = styled.input`
   padding: 10px;
   width: 100%;
@@ -21,26 +26,31 @@ const StyledInput = styled.input`
     border-color: rgba(0, 0, 0, 0.6);
     outline: none;
   }
+
   &::placeholder {
     color: rgba(3, 138, 255, 0.8);
   }
 `
+
 const CloseButton = styled.div`
   position: absolute;
   top: 0;
   right: 12px;
-
   font-size: 24px;
   line-height: 24px;
   height: 50px;
   width: 50px;
   padding: 10px;
+  cursor: pointer;
 `
 
-const SearchInput = ({ searchHandler, query, onClear }) => {
+const SearchInput: React.FC<ISearchInputProps> = ({
+  searchHandler,
+  query,
+  onClear,
+}) => {
   return (
     <InputWrapper>
-      {" "}
       <StyledInput
         type="text"
         placeholder="Поиск репозиториев на GitHub"

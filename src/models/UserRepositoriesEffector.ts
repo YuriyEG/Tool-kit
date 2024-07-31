@@ -1,12 +1,9 @@
+import type { IUserRepository } from "../types/User.types"
+
 import { createStore, createEvent, createEffect } from "effector"
 import { persist } from "effector-storage/session"
-import fetchUserRepositories from "../services/fetchUserRepositories" // Импорт вашего нового сервиса
 
-interface Repository {
-  id: number
-  name: string
-}
-
+import fetchUserRepositories from "../services/fetchUserRepositories"
 interface FetchError {
   message: string
 }
@@ -15,9 +12,9 @@ export const fetchUserListFx = createEffect(fetchUserRepositories)
 
 export const loadUserList = createEvent()
 
-export const $userRepositories = createStore<Repository[]>([])
+export const $userRepositories = createStore<IUserRepository[]>([])
   .on(loadUserList, () => [])
-  .on(fetchUserListFx.doneData, (state, repositories) => repositories)
+  .on(fetchUserListFx.doneData, (_, repositories) => repositories)
 
 export const $userLoading = createStore(false).on(
   fetchUserListFx.pending,
@@ -27,11 +24,6 @@ export const $userLoading = createStore(false).on(
 export const $userError = createStore<FetchError | null>(null)
   .on(fetchUserListFx.failData, (_, error) => error)
   .reset(fetchUserListFx.doneData)
-
-loadUserList.watch(() => {
-  $userError.watch(() => null)
-  fetchUserListFx()
-})
 
 persist({
   source: $userRepositories,

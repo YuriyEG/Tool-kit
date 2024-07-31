@@ -8,10 +8,6 @@ export const $currentPage = createStore(1).on(
   (_, newPage) => newPage,
 )
 
-$currentPage.watch(currentPage => {
-  console.log("Текущая стр", currentPage)
-})
-
 persist({
   source: $currentPage,
   target: $currentPage,

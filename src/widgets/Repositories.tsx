@@ -13,7 +13,7 @@ import {
 import { useUnit } from "effector-react"
 import debouncer from "../helper/debouncer"
 
-import { changeCurrentPage } from "../models/RepositoriesPagination"
+import { changeCurrentPage } from "../models/RepositoriesPaginationEffector"
 
 import { $query } from "../models/QuerieEffectror"
 import { changeQuery } from "../models/QuerieEffectror"

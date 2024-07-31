@@ -1,28 +1,24 @@
+import type { IRepositoryDetails } from "../types/RepositoryDetails.types"
+
 import { createStore, createEvent, createEffect } from "effector"
 import { persist } from "effector-storage/session"
 
 import fetchRepositoryData from "../services/fetchRepositoryData"
-
-interface Repository {
-  id: number
-  name: string
-}
-
 interface FetchError {
   message: string
 }
 
 export const fetchRepositoryDataFx = createEffect<
   string,
-  Repository,
+  IRepositoryDetails,
   FetchError
 >(fetchRepositoryData)
 
 export const loadData = createEvent<string>()
 
-export const $repositoryData = createStore<Repository[]>([])
+export const $repositoryData = createStore<IRepositoryDetails[]>([])
   .on(loadData, () => [])
-  .on(fetchRepositoryDataFx.doneData, (state, repositoryData) => repositoryData)
+  .on(fetchRepositoryDataFx.doneData, (_, repositoryData) => repositoryData)
 
 export const $loading = createStore<boolean>(false).on(
   fetchRepositoryDataFx.pending,

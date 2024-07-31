@@ -1,3 +1,5 @@
+import type React from "react"
+
 import styled, { keyframes } from "styled-components"
 
 const spin = keyframes`
@@ -12,20 +14,18 @@ const LoaderContainer = styled.div`
 `
 
 const Spinner = styled.div`
-  border: 8px solid rgba(0, 0, 0, 0.1); // светлый цвет фона
-  border-left-color: #3498db; // цвет индикатора
+  border: 8px solid rgba(0, 0, 0, 0.1);
+  border-left-color: rgba(52, 152, 219, 1);
   border-radius: 50%;
-  width: 60px; // ширина индикатора
-  height: 60px; // высота индикатора
-  animation: ${spin} 1s linear infinite; // анимация вращения
+  width: 60px;
+  height: 60px;
+  animation: ${spin} 1s linear infinite;
 `
 
-const Loader = () => {
-  return (
-    <LoaderContainer>
-      <Spinner />
-    </LoaderContainer>
-  )
-}
+const Loader: React.FC = () => (
+  <LoaderContainer>
+    <Spinner />
+  </LoaderContainer>
+)
 
 export default Loader

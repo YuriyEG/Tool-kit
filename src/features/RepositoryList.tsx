@@ -5,9 +5,9 @@ import Pagination from "../shared/ui/Pagination"
 import { useNavigate } from "react-router-dom"
 
 import { useUnit } from "effector-react"
-import { $currentPage } from "../models/RepositoriesPagination"
+import { $currentPage } from "../models/RepositoriesPaginationEffector"
 
-import { changeCurrentPage } from "../models/RepositoriesPagination"
+import { changeCurrentPage } from "../models/RepositoriesPaginationEffector"
 
 const StyledList = styled.ul`
   margin-bottom: 20px;

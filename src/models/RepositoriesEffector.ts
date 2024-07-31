@@ -1,24 +1,21 @@
+import type { IRepository } from "../types/Repository.types"
+
 import { createStore, createEvent, createEffect } from "effector"
 import { persist } from "effector-storage/session"
 
 import fetchRepositories from "../services/fetchRepositories"
 
-interface Repository {
-  id: number
-  name: string
-}
-
 interface FetchError {
   message: string
 }
 
-export const fetchListFx = createEffect<string, Repository[], FetchError>(
+export const fetchListFx = createEffect<string, IRepository[], FetchError>(
   fetchRepositories,
 )
 
 export const loadList = createEvent<string>()
 
-export const $repositories = createStore<Repository[]>([])
+export const $repositories = createStore<IRepository[]>([])
   .on(loadList, () => [])
   .on(fetchListFx.doneData, (state, repositories) => repositories)
 

@@ -1,4 +1,12 @@
+import PropTypes from "prop-types"
+import type { FC } from "react"
+
 import styled from "styled-components"
+
+interface ITooltipProps {
+  children: React.ReactNode
+  content: string
+}
 
 const TooltipWrapper = styled.span`
   width: fit-content;
@@ -21,27 +29,33 @@ const TooltipText = styled.a`
   left: 50%;
   margin-left: -60px;
   opacity: 0;
-  transition: 0.2s ease-in all;
-  transition-delay: 0.2;
+  transition: opacity 0.2s ease-in;
+  transition-delay: 0.2s;
   font-size: 18px;
   line-height: 18px;
   font-family: Regular, Arial;
+
   ${TooltipWrapper}:hover & {
     visibility: visible;
     opacity: 1;
-    transition: 0.4s ease-in all;
+    transition: opacity 0.4s ease-in;
   }
 `
 
-const Tooltip = ({ children, content }) => {
+const Tooltip: FC<ITooltipProps> = ({ children, content }) => {
   return (
     <TooltipWrapper>
       {children}
-      <TooltipText href={content} target="_blank">
+      <TooltipText href={content} target="_blank" rel="noopener noreferrer">
         {content}
       </TooltipText>
     </TooltipWrapper>
   )
+}
+
+Tooltip.propTypes = {
+  children: PropTypes.node.isRequired,
+  content: PropTypes.string.isRequired,
 }
 
 export default Tooltip

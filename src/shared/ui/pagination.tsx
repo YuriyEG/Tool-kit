@@ -1,12 +1,7 @@
 import type React from "react"
-import styled, { css } from "styled-components"
+import type { IPaginationProps } from "../../types/Pagination.types"
 
-interface IPaginationProps {
-  totalItems: number
-  itemsPerPage: number
-  onPageChange: (page: number) => void
-  currentPage: number
-}
+import styled, { css } from "styled-components"
 
 const Button = styled.button<{ selected: boolean }>`
   margin: 0 5px;
@@ -88,24 +83,14 @@ const Pagination: React.FC<IPaginationProps> = ({
 
   return (
     <div>
-      {currentPage !== 1 && (
-        <Button
-          key="first"
-          onClick={handlePreviousGroup}
-          disabled={currentPage === 1}
-          selected={false}
-        >
+      {currentPage > 1 && (
+        <Button key="first" onClick={handlePreviousGroup} selected={false}>
           &lt;
         </Button>
       )}
       {renderPageNumbers()}
-      {currentPage !== totalPages && (
-        <Button
-          key="last"
-          onClick={handleNextGroup}
-          disabled={false}
-          selected={false}
-        >
+      {currentPage < totalPages && (
+        <Button key="last" onClick={handleNextGroup} selected={false}>
           &gt;
         </Button>
       )}
