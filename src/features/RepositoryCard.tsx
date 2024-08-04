@@ -11,10 +11,11 @@ import {
   $repositoryData,
   fetchRepositoryDataFx,
 } from "../models/RepositoryCardEffector"
+
 import getDistance from "../helper/getDistance"
 
 const Container = styled.article`
-  width: 500px;
+  width: 600px;
   height: auto;
   margin: 0 auto;
   padding: 28px;
@@ -69,12 +70,10 @@ const CardBody = styled.div`
   }
 
   .login {
+    width: 100%;
     font-size: 24px;
     font-weight: bold;
-    margin: 0 auto;
     text-decoration: none;
-    width: 100%;
-    text-align: center;
     word-break: break-all;
     padding: 12px;
 
@@ -91,10 +90,16 @@ const About = styled.div`
 
   .language {
     margin-bottom: 12px;
+    text-align: left;
+  }
+  .description {
+    margin-bottom: 2px;
+    text-align: left;
   }
 
   .bold {
     font-weight: bold;
+    margin-bottom: 4px;
   }
 `
 
@@ -125,21 +130,30 @@ const RepositoryCard: FC = () => {
       </CardHeader>
       <CardBody>
         <img src={avatarUrl} className="photo" alt={name} />
-        <Tooltip content={url}>
-          <span className="login">{login}</span>
-        </Tooltip>
+
+        <span className="login">
+          <Tooltip content={url}>{login}</Tooltip>
+        </span>
       </CardBody>
       <About>
-        <span className="language">
-          <span className="bold">Language: </span>
-          {languages?.nodes.map((node, index) => (
-            <span key={index}>{String(node.name)} </span>
-          ))}
-        </span>
-        <span className="description">
-          <span className="bold">About: </span>
-          {description}
-        </span>
+        {languages.nodes?.length !== 0 && (
+          <>
+            {" "}
+            <p className="bold">Language: </p>
+            <span className="language">
+              {languages?.nodes.map((node, index) => (
+                <span key={index}>{String(node.name)} </span>
+              ))}
+            </span>
+          </>
+        )}
+
+        {description?.length && (
+          <>
+            <p className="bold">About: </p>
+            <span className="description">{description}</span>
+          </>
+        )}
       </About>
     </Container>
   )

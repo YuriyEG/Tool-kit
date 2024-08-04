@@ -9,7 +9,7 @@ interface ITooltipProps {
 }
 
 const TooltipWrapper = styled.span`
-  width: fit-content;
+  width: auto;
   position: relative;
   display: inline-block;
   cursor: pointer;
@@ -34,6 +34,7 @@ const TooltipText = styled.a`
   font-size: 18px;
   line-height: 18px;
   font-family: Regular, Arial;
+  word-break: keep-all;
 
   ${TooltipWrapper}:hover & {
     visibility: visible;

@@ -1,5 +1,5 @@
 import type { IRepository } from "../types/Repository.types"
-import type { FC } from "react"
+import { useEffect, type FC } from "react"
 
 import styled from "styled-components"
 import { useUnit } from "effector-react"
@@ -44,9 +44,11 @@ const Repositories: FC = () => {
   const loading = useUnit($loading)
   const userRepositories: IRepository[] = useUnit($userRepositories)
 
-  if (!userRepositories.length) {
-    fetchUserListFx(CURRENTUSER)
-  }
+  useEffect(() => {
+    if (!userRepositories.length) {
+      fetchUserListFx(CURRENTUSER)
+    }
+  }, [])
 
   const searchHandler = (searchQuery: string) => {
     changeQuery(searchQuery)

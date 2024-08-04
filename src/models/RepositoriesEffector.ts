@@ -13,7 +13,7 @@ export const fetchListFx = createEffect<string, IRepository[], FetchError>(
   fetchRepositories,
 )
 
-export const loadList = createEvent<string>()
+export const loadList = createEvent<IRepository[]>()
 
 export const $repositories = createStore<IRepository[]>([])
   .on(loadList, () => [])
@@ -30,7 +30,6 @@ export const $error = createStore<FetchError | null>(null)
 
 loadList.watch(searchQuery => {
   $error.watch(() => null)
-  fetchListFx(searchQuery)
 })
 
 persist({
