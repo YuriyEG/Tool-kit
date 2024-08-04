@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-https://tool-2rcmfewgg-yuriyegs-projects.vercel.app/
-=======
-https://tool-18obpl1us-yuriyegs-projects.vercel.app/
->>>>>>> ee2cfc82baf1adcf9253503ea7d72e546ba6266b
+Deploy https://tool-18obpl1us-yuriyegs-projects.vercel.app/
 
 # Тестовое задание frontend developer
 
